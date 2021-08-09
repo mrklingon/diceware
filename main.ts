@@ -1,5 +1,41 @@
-let Dictionary = ["a", "b", "c"]
-let mySprite = sprites.create(img`
+namespace SpriteKind {
+    export const Creature = SpriteKind.create()
+}
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    Fizban.say(MakeSpell(), 5000)
+})
+function mkCreature () {
+    Creature.setPosition(0, 16)
+    Creature.setVelocity(50, 0)
+    Creature.setBounceOnWall(false)
+}
+function MakeSpell () {
+    Spell = ""
+    for (let index = 0; index < 6; index++) {
+        Spell = "" + Spell + "  " + Dictionary[randint(0, Dictionary.length - 1)]
+    }
+    return Spell
+}
+controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
+    Fizban.x += 1
+    Fizban.setImage(assets.image`Temporary asset0`)
+})
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    Fizban.say(Spell, 2000)
+})
+controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
+    Fizban.x += -1
+    Fizban.setImage(assets.image`Temporary asset`)
+})
+let Creature: Sprite = null
+let Fizban: Sprite = null
+let Dictionary: string[] = []
+let Spell = ""
+game.splash("Fizban will help you cast a spell")
+music.playMelody("E B C5 A B G A F ", 237)
+Spell = ""
+Dictionary = ["a", "b", "c"]
+Fizban = sprites.create(img`
     ........................ffff....
     ................ffffffff..f.....
     ............ffffaaaaaaaaff......
@@ -33,7 +69,7 @@ let mySprite = sprites.create(img`
     ................................
     ................................
     `, SpriteKind.Player)
-mySprite.setPosition(32, 117)
+Fizban.setPosition(32, 117)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999966666699969999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -156,4 +192,26 @@ scene.setBackgroundImage(img`
     4ddddddd4d444dd4dd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd4ddddddddddddddddddddddddddddddd4ddddddddddddddddddddddddddddd4ddddddddd
     dddddddddd444ddddd3ddddddddddddd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd44dddddddddddddddddddddddddddddddddd4ddddddddd
     `)
-controller.moveSprite(mySprite)
+Fizban.setStayInScreen(true)
+Creature = sprites.create(img`
+    ..........777777...................
+    ........77777777777................
+    ............777777777..............
+    ..............77777777.....77......
+    ...............77777777.....7......
+    ...............777777777777772.....
+    ..777........7777777777777777777...
+    .77.77....777..77777777777777...7..
+    .7...777777......77777.............
+    ................777777.............
+    ...............777777..............
+    ..............7777777..............
+    ..........7777.77777...............
+    .........7777777...................
+    ...................................
+    ...................................
+    `, SpriteKind.Creature)
+forever(function () {
+    pause(randint(500, 5000))
+    mkCreature()
+})
