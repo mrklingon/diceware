@@ -17,7 +17,7 @@ let mySprite = sprites.create(img`
     . . . . . . . . f f f f f . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-mySprite.setPosition(0, 117)
+mySprite.setPosition(32, 117)
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999966666699969999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -140,3 +140,4 @@ scene.setBackgroundImage(img`
     4ddddddd4d444dd4dd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd4ddddddddddddddddddddddddddddddd4ddddddddddddddddddddddddddddd4ddddddddd
     dddddddddd444ddddd3ddddddddddddd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd44dddddddddddddddddddddddddddddddddd4ddddddddd
     `)
+controller.moveSprite(mySprite)
