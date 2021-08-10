@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const Creature = SpriteKind.create()
+    export const bomb = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     music.magicWand.play()
@@ -37,6 +38,10 @@ controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
     Fizban.x += 1
     Fizban.setImage(assets.image`Temporary asset0`)
 })
+sprites.onOverlap(SpriteKind.bomb, SpriteKind.Player, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.startEffect(effects.halo, 500)
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     Fizban.say(Spell, 2000)
 })
@@ -62,21 +67,29 @@ function mkCreature2 () {
         ...................................
         ...................................
         `)
+    pause(200)
+    cbomb = sprites.create(assets.image`myImage`, SpriteKind.bomb)
+    cbomb.setPosition(creature3.x, creature3.y)
+    cbomb.follow(Fizban)
+    cbomb.setFlag(SpriteFlag.AutoDestroy, true)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Creature, function (sprite, otherSprite) {
     sprite.destroy()
+    info.changeScoreBy(1)
     otherSprite.setImage(assets.image`Temporary asset2`)
 })
 controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
     Fizban.x += -1
     Fizban.setImage(assets.image`Temporary asset`)
 })
+let cbomb: Sprite = null
 let Fireball: Sprite = null
 let creature3: Sprite = null
 let Creature2: Sprite = null
 let Fizban: Sprite = null
 let Dictionary: string[] = []
 let Spell = ""
+info.setLife(3)
 game.splash("Fizban will help you cast a spell")
 music.playMelody("E B C5 A B G A F ", 237)
 Spell = ""
