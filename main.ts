@@ -41,6 +41,7 @@ controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
 sprites.onOverlap(SpriteKind.bomb, SpriteKind.Player, function (sprite, otherSprite) {
     sprite.destroy()
     otherSprite.startEffect(effects.halo, 500)
+    info.changeLifeBy(-1)
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     Fizban.say(Spell, 2000)
@@ -73,6 +74,10 @@ function mkCreature2 () {
     cbomb.follow(Fizban)
     cbomb.setFlag(SpriteFlag.AutoDestroy, true)
 }
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.bomb, function (sprite, otherSprite) {
+    sprite.destroy()
+    cbomb.destroy()
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Creature, function (sprite, otherSprite) {
     sprite.destroy()
     info.changeScoreBy(1)
@@ -89,7 +94,7 @@ let Creature2: Sprite = null
 let Fizban: Sprite = null
 let Dictionary: string[] = []
 let Spell = ""
-info.setLife(3)
+info.setLife(10)
 game.splash("Fizban will help you cast a spell")
 music.playMelody("E B C5 A B G A F ", 237)
 Spell = ""
