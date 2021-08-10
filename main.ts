@@ -96,6 +96,9 @@ let Dictionary: string[] = []
 let Spell = ""
 info.setLife(10)
 game.splash("Fizban will help you cast a spell")
+game.splash("A: turns Western dragons into Eagles")
+game.splash("B: defends against Eastern Dragons")
+game.splash("UP: reveals a spell/passphrase, DOWN to repeat")
 music.playMelody("E B C5 A B G A F ", 237)
 Spell = ""
 Dictionary = [
