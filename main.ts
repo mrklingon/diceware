@@ -11,6 +11,12 @@ function mkCreature () {
     Creature2.setVelocity(randint(50, 100), 0)
     Creature2.setBounceOnWall(false)
     Creature2.setImage(assets.image`Temporary asset3`)
+    animation.runImageAnimation(
+    Creature2,
+    assets.animation`goodDragon`,
+    200,
+    false
+    )
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     music.magicWand.play()
@@ -42,6 +48,8 @@ sprites.onOverlap(SpriteKind.bomb, SpriteKind.Player, function (sprite, otherSpr
     sprite.destroy()
     otherSprite.startEffect(effects.halo, 500)
     info.changeLifeBy(-1)
+    scene.cameraShake(4, 500)
+    music.knock.play()
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     Fizban.say(Spell, 2000)
@@ -82,6 +90,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Creature, function (sprite, 
     sprite.destroy()
     info.changeScoreBy(1)
     otherSprite.setImage(assets.image`Temporary asset2`)
+    animation.runImageAnimation(
+    otherSprite,
+    assets.animation`goodEagle`,
+    400,
+    false
+    )
 })
 controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
     Fizban.x += -1
@@ -518,6 +532,14 @@ Creature2 = sprites.create(img`
     ...................................
     `, SpriteKind.Creature)
 creature3 = sprites.create(assets.image`Temporary asset3`, SpriteKind.Enemy)
+animation.runImageAnimation(
+creature3,
+assets.animation`BadDragon`,
+650,
+true
+)
+mkCreature()
+mkCreature2()
 forever(function () {
     pause(randint(500, 5000))
     if (randint(0, 10) > 7) {
