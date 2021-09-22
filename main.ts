@@ -31,7 +31,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Fireball = sprites.create(assets.image`myImage`, SpriteKind.Projectile)
     Fireball.setPosition(Fizban.x, Fizban.y)
     Fireball.follow(Creature2)
-    Fireball.startEffect(effects.trail)
+    Fireball.startEffect(effects.trail, 500)
     Fireball.setFlag(SpriteFlag.AutoDestroy, true)
 })
 function MakeSpell () {
