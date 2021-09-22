@@ -9,8 +9,8 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 function mkCreature () {
     Creature2.setPosition(0, randint(16, 56))
     Creature2.setVelocity(randint(50, 100), 0)
-    Creature2.setBounceOnWall(false)
     Creature2.setImage(assets.image`Temporary asset3`)
+    Creature2.setFlag(SpriteFlag.AutoDestroy, true)
     animation.runImageAnimation(
     Creature2,
     assets.animation`goodDragon`,
@@ -24,6 +24,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     Fireball.setPosition(Fizban.x, Fizban.y)
     Fireball.follow(creature3)
     Fireball.startEffect(effects.hearts)
+    Fireball.setFlag(SpriteFlag.AutoDestroy, true)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     music.magicWand.play()
@@ -31,6 +32,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Fireball.setPosition(Fizban.x, Fizban.y)
     Fireball.follow(Creature2)
     Fireball.startEffect(effects.trail)
+    Fireball.setFlag(SpriteFlag.AutoDestroy, true)
 })
 function MakeSpell () {
     Spell = ""
@@ -40,9 +42,9 @@ function MakeSpell () {
     mkCreature2()
     return Spell
 }
-controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
-    Fizban.x += 1
-    Fizban.setImage(assets.image`Temporary asset0`)
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    Fizban.x += -5
+    Fizban.setImage(assets.image`Temporary asset`)
 })
 sprites.onOverlap(SpriteKind.bomb, SpriteKind.Player, function (sprite, otherSprite) {
     sprite.destroy()
@@ -51,13 +53,16 @@ sprites.onOverlap(SpriteKind.bomb, SpriteKind.Player, function (sprite, otherSpr
     scene.cameraShake(4, 500)
     music.knock.play()
 })
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    Fizban.x += 5
+    Fizban.setImage(assets.image`Temporary asset0`)
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     Fizban.say(Spell, 2000)
 })
 function mkCreature2 () {
     creature3.setPosition(160, randint(16, 56))
     creature3.setVelocity(-63, 0)
-    creature3.setBounceOnWall(false)
     creature3.setImage(img`
         ...................666666..........
         ................66666766666........
@@ -76,6 +81,7 @@ function mkCreature2 () {
         ...................................
         ...................................
         `)
+    creature3.setFlag(SpriteFlag.AutoDestroy, true)
     pause(200)
     cbomb = sprites.create(assets.image`myImage`, SpriteKind.bomb)
     cbomb.setPosition(creature3.x, creature3.y)
@@ -96,10 +102,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Creature, function (sprite, 
     400,
     false
     )
-})
-controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
-    Fizban.x += -1
-    Fizban.setImage(assets.image`Temporary asset`)
 })
 let cbomb: Sprite = null
 let Fireball: Sprite = null
